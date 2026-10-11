@@ -11,6 +11,8 @@ export type AllConnections = {
   meet: ConnectionItem;
 };
 
+export type ConnectionInfo = AllConnections;
+
 export type AgentActivityStage =
   | "thinking"
   | "tool_call"

@@ -59,3 +59,11 @@ export const refreshProvider = async (
 
   return response.connection;
 };
+
+export const connectCalendar = async (token: string) => {
+  return await connectProvider(token, "calendar");
+};
+
+export const refreshCalendarConnection = async (token: string) => {
+  return await refreshProvider(token, "calendar");
+};
