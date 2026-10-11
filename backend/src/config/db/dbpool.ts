@@ -5,12 +5,13 @@ let pool: Pool | null = null;
 export const getPool = (): Pool => {
   try {
     if (!pool) {
+      const connectionString = process.env.DATABASE_URL;
+      if (!connectionString) {
+        throw new Error("DATABASE_URL environment variable is not set");
+      }
+
       pool = new Pool({
-        host: process.env.BACKEND_POSTGRES_HOST,
-        port: Number(process.env.BACKEND_POSTGRES_PORT),
-        user: process.env.BACKEND_POSTGRES_USER,
-        password: process.env.BACKEND_POSTGRES_PASSWORD,
-        database: process.env.BACKEND_POSTGRES_DB,
+        connectionString,
       });
 
       pool.on("error", (err) => {

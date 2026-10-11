@@ -64,8 +64,14 @@ connectionRouter.post("/connect", async (req, res) => {
 
     const redirectUrl =
       parsed.data.redirectUrl ||
-      process.env.URI_FRONTEND ||
-      "http://localhost:3000";
+      process.env.URI_FRONTEND;
+
+    if (!redirectUrl) {
+      return res.status(400).json({
+        error: "Missing redirectUrl and URI_FRONTEND is not set",
+        success: false,
+      });
+    }
 
     const result = await createProviderConnection(
       req.authContext.userId,

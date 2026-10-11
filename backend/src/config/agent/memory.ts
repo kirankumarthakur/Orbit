@@ -1,15 +1,10 @@
 import { PostgresStore } from "@mastra/pg";
 import { Memory } from "@mastra/memory";
 
-const host = process.env.BACKEND_POSTGRES_HOST || "localhost";
-const port = Number(process.env.BACKEND_POSTGRES_PORT) || 5432;
-const user = process.env.BACKEND_POSTGRES_USER || "orbit_user";
-const password = process.env.BACKEND_POSTGRES_PASSWORD || "orbit_password";
-const database = process.env.BACKEND_POSTGRES_DB || "orbit_db";
-
-const connectionString =
-  process.env.DATABASE_URL ||
-  `postgresql://${encodeURIComponent(user)}:${encodeURIComponent(password)}@${host}:${port}/${database}`;
+const connectionString = process.env.DATABASE_URL;
+if (!connectionString) {
+  throw new Error("DATABASE_URL environment variable is not set");
+}
 
 export const memoryStore = new PostgresStore({
   id: "orbit-postgres-memory-store",
